@@ -1,0 +1,347 @@
+/* 
+   Security Price Predictions Dashboard
+   Modern financial aesthetic with clean typography and data focus
+*/
+
+:root {
+    --primary-blue: #0066cc;
+    --success-green: #22c55e;
+    --danger-red: #ef4444;
+    --warning-orange: #f97316;
+    --info-cyan: #06b6d4;
+    --bg-light: #f5f7fa;
+    --bg-white: #ffffff;
+    --text-dark: #1f2937;
+    --text-light: #6b7280;
+    --border-color: #e5e7eb;
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+        'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+        sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: var(--bg-light);
+    color: var(--text-dark);
+}
+
+/* ============================================
+   HEADER
+   ============================================ */
+
+.header-container {
+    padding: 40px 20px;
+    background: linear-gradient(135deg, var(--primary-blue) 0%, #004399 100%);
+    color: white;
+    margin-bottom: 30px;
+    box-shadow: var(--shadow-lg);
+    border-radius: 12px;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 20px;
+}
+
+.dashboard-title {
+    font-size: 2.5em;
+    font-weight: 700;
+    letter-spacing: -1px;
+    margin-bottom: 8px;
+}
+
+.dashboard-subtitle {
+    font-size: 1.1em;
+    opacity: 0.9;
+    font-weight: 300;
+}
+
+/* ============================================
+   FILTER PANEL
+   ============================================ */
+
+.filters-wrapper {
+    margin: 0 20px 30px 20px;
+    background: var(--bg-white);
+    border-radius: 12px;
+    box-shadow: var(--shadow-md);
+    padding: 30px;
+}
+
+.filter-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.filter-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.filter-item-full {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: column;
+}
+
+.filter-label {
+    font-size: 0.95em;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--text-dark);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.filter-dropdown {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    font-size: 0.95em;
+    background-color: var(--bg-white);
+    transition: all 0.2s ease;
+}
+
+.filter-dropdown:hover {
+    border-color: var(--primary-blue);
+    box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+}
+
+.range-slider {
+    width: 100%;
+}
+
+.rc-slider {
+    margin: 20px 0 10px 0;
+}
+
+.reset-button {
+    grid-column: 1 / -1;
+    padding: 12px 24px;
+    background: var(--text-light);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.95em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.reset-button:hover {
+    background: var(--text-dark);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.reset-button:active {
+    transform: translateY(0);
+}
+
+/* ============================================
+   MAIN CONTENT
+   ============================================ */
+
+.main-content {
+    padding: 0 20px;
+}
+
+.main-graph-container {
+    background: var(--bg-white);
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: var(--shadow-md);
+    margin-bottom: 30px;
+}
+
+.main-graph-container .plotly-graph-div {
+    border-radius: 8px;
+}
+
+/* ============================================
+   METRICS GRID
+   ============================================ */
+
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 24px;
+    margin-bottom: 40px;
+}
+
+.metric-card {
+    background: var(--bg-white);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: var(--shadow-md);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.metric-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-blue), var(--info-cyan));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+}
+
+.metric-card:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-4px);
+}
+
+.metric-card:hover::before {
+    transform: scaleX(1);
+}
+
+.metric-card .plotly-graph-div {
+    border-radius: 8px;
+}
+
+/* ============================================
+   LOADING STATES
+   ============================================ */
+
+._dash_loading {
+    padding: 20px;
+    text-align: center;
+    color: var(--text-light);
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+@media (max-width: 1200px) {
+    .metrics-grid {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .header-container {
+        padding: 30px 20px;
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    .dashboard-title {
+        font-size: 1.8em;
+    }
+
+    .dashboard-subtitle {
+        font-size: 0.95em;
+    }
+
+    .filter-container {
+        grid-template-columns: 1fr;
+    }
+
+    .filter-item-full {
+        grid-column: 1;
+    }
+
+    .metrics-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .main-content,
+    .filters-wrapper {
+        padding: 0 10px;
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+}
+
+/* ============================================
+   PLOTLY CUSTOMIZATIONS
+   ============================================ */
+
+.plotly-graph-div .modebar {
+    right: 10px;
+}
+
+.plotly-graph-div .legend {
+    background-color: rgba(255, 255, 255, 0.8) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 6px !important;
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.main-graph-container,
+.metric-card,
+.header-container {
+    animation: fadeIn 0.6s ease-out;
+}
+
+.metric-card:nth-child(2) {
+    animation-delay: 0.1s;
+}
+
+.metric-card:nth-child(3) {
+    animation-delay: 0.2s;
+}
+
+.metric-card:nth-child(4) {
+    animation-delay: 0.3s;
+}
+
+.metric-card:nth-child(5) {
+    animation-delay: 0.4s;
+}
+
+/* ============================================
+   SCROLLBAR STYLING
+   ============================================ */
+
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-light);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--text-light);
+}
