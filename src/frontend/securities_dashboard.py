@@ -4,17 +4,29 @@ import plotly.graph_objects as go
 import plotly.express as px
 import pandas as pd
 import numpy as np
+import os
 from datetime import datetime, timedelta
 import psycopg2
 from psycopg2.extras import RealDictCursor
+import sqlalchemy
 from sqlalchemy import create_engine, text
+from dotenv import load_dotenv
+load_dotenv()
 
 # ============================================
 # DATABASE CONNECTION
 # ============================================
 # Configure your database connection
-DB_URL = "postgresql://username:password@localhost:5432/dev_findata"
-engine = create_engine(DB_URL)
+host = os.environ.get("DB_HOST", "localhost")
+port = int(os.environ.get("DB_PORT", 5432))
+database = os.environ.get("DB_NAME", "dev_findata")
+user = os.environ.get("DB_USER", "postgres")
+password = os.environ["DB_PASSWORD"]  # intentionally required
+
+url = f"postgresql+psycopg2://{user}:{password}@{host}:{port}/{database}"
+engine = sqlalchemy.create_engine(url, pool_pre_ping=True)
+print("Database engine created (%s:%s/%s)", host, port, database)
+
 
 
 # ============================================
@@ -559,10 +571,7 @@ def reset_filters(n_clicks):
 # ============================================
 
 if __name__ == '__main__':
-    app.run_server(debug=True, port=8050)
+    app.run(debug=True, port=8050)
 
 
 
-
-if __name__ == '__main__':
-    (app.run(debug=True))
